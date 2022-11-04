@@ -24,6 +24,8 @@ class MemberRepositoryTest @Autowired constructor(
 
         val findMember: Member? = memberRepository.findByIdOrNull(member.id!!) // 그냥 findByID는 Optional<> 리턴
 
+        Assertions.assertThat(findMember?.id).isEqualTo(member.id)
+        Assertions.assertThat(findMember?.username).isEqualTo(member.username)
         Assertions.assertThat(findMember).isEqualTo(member)
     }
 }
