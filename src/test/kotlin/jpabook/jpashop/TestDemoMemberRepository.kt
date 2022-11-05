@@ -1,7 +1,6 @@
 package jpabook.jpashop
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -11,18 +10,18 @@ import javax.persistence.EntityManager
 
 // 스프링 튜토리얼 참조
 @DataJpaTest
-class MemberRepositoryTest @Autowired constructor(
+class TestDemoMemberRepository @Autowired constructor(
     val em: EntityManager,
-    val memberRepository: MemberRepository
+    val demoMemberRepository: DemoMemberRepository
 ) {
     @Test
     @Transactional
     fun `save member`() {
-        val member: Member = Member("memberA")
+        val member: DemoMember = DemoMember("memberA")
         em.persist(member)
         em.flush()
 
-        val findMember: Member? = memberRepository.findByIdOrNull(member.id!!) // 그냥 findByID는 Optional<> 리턴
+        val findMember: DemoMember? = demoMemberRepository.findByIdOrNull(member.id!!) // 그냥 findByID는 Optional<> 리턴
 
         Assertions.assertThat(findMember?.id).isEqualTo(member.id)
         Assertions.assertThat(findMember?.username).isEqualTo(member.username)
