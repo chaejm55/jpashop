@@ -15,6 +15,12 @@ allOpen {
 	annotation("javax.persistence.MappedSuperclass")
 }
 
+noArg {
+	annotation("javax.persistence.Entity")
+	annotation("javax.persistence.Embeddable")
+	annotation("javax.persistence.MappedSuperclass")
+}
+
 group = "jpabook"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8

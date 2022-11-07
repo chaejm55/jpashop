@@ -15,9 +15,9 @@ class Member (
     val address: Address,
 
     @OneToMany(mappedBy = "member")
-    val orders: List<Order>,
-
+    val orders: MutableList<Order>?,
+) {
     @Id @GeneratedValue
     @Column(name = "member_id")
-    val id: Long?
-)
+    val id: Long? = null
+}

@@ -1,9 +1,14 @@
 package jpabook.jpashop.domain.item
 
-import javax.persistence.Column
+import jpabook.jpashop.domain.Category
 import javax.persistence.DiscriminatorValue
 import javax.persistence.Entity
+import javax.persistence.Inheritance
+import javax.persistence.InheritanceType
 
 @Entity
 @DiscriminatorValue("B")
-class Book(name: String, price: Int, stockQuantity: Int, id: Long, author: String, isbn: String): Item(name, price, stockQuantity, id)
+class Book(author: String, isbn: String): Item() {
+    val author: String = author
+    val isbn: String = isbn
+}
