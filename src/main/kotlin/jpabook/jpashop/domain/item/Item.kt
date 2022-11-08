@@ -20,7 +20,7 @@ abstract class Item () {
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    val id: Long? = null
+    var id: Long? = null
 
     constructor(name: String, price: Int, stockQuantity: Int, categories: MutableList<Category>) : this() {
         this.name = name

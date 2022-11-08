@@ -15,7 +15,7 @@ class ItemRepository (
         if (item.id == null) {
             em.persist(item)
         } else {
-            em.merge(item)
+            em.merge(item) // ?
         }
     }
 
