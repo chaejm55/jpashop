@@ -7,14 +7,14 @@ import javax.persistence.*
 class OrderItem (
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    val item: Item,
+    val item: Item?,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     val order: Order?,
 
-    val orderPrice: Int,
-    val count: Int,
+    val orderPrice: Int?,
+    val count: Int?,
 ) {
     @Id @GeneratedValue
     @Column(name = "order_item_id")
@@ -36,13 +36,13 @@ class OrderItem (
 
     //==비즈니스 로직==//
     fun cancel() { // 주문 취소 시 재고 수량 복구
-        item.addStock(count)
+        item?.addStock(count!!)
     }
 
     /**
      * 주문상품 전체 가격 조회
      */
     fun getTotalPrice(): Int {
-        return orderPrice * count
+        return orderPrice?.times(count!!) ?: 0
     }
 }

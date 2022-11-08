@@ -8,6 +8,8 @@ import jpabook.jpashop.domain.item.Item
 import jpabook.jpashop.repository.ItemRepository
 import jpabook.jpashop.repository.MemberRepository
 import jpabook.jpashop.repository.OrderRepository
+import jpabook.jpashop.repository.OrderSearch
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -43,7 +45,7 @@ class OrderService (
         val orderItem: OrderItem = OrderItem.createOrderItem(item, item.price!!, count)
 
         // 주문 생성
-        val order: Order = Order.createOrder(member, delivery, mutableListOf<OrderItem>(orderItem))
+        val order: Order = Order.createOrder(member, delivery, listOf(orderItem))
 
         // 주문 저장
         orderRepository.save(order)
@@ -56,14 +58,24 @@ class OrderService (
     @Transactional
     fun cancelOrder(orderId: Long) {
         // 주문 엔티티 조회
-        val order: Order = orderRepository.findOne(orderId)
+        val order = orderRepository.findOne(orderId)
         // 도메인 모델 패턴: 엔티티가 비즈니스 로직을 가짐
         // 주문 취소
         order.cancel()
     }
-    
+
+
     // 검색
-//    fun findOrders(orderSearch: OrderSearch) {
-//        return orderRepository.findOne(orderSearch)
-//    }
+    fun findOrders(orderSearch: OrderSearch): List<Order> {
+        println("list=?")
+        val list = orderRepository.findAllByString(orderSearch)
+        try {
+            println("list.size=${list.size}")
+            println("orderItem.size=${list[0].orderItems.size}")
+            println("orderItem=${list[0].orderItems[0].item?.name}")
+        } catch (e: Exception) {
+            println(e.message)
+        }
+        return list
+    }
 }

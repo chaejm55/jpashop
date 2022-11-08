@@ -38,7 +38,7 @@ class ItemController (
     }
 
     @GetMapping("/items/{itemId}/edit")
-    fun updateItemForm(@PathVariable("itemId") itemId: Long, model: Model):String {
+    fun updateItemForm(@PathVariable("itemId") itemId: Long, model: Model): String {
         val item: Book = itemService.findOne(itemId) as Book
 
         val bookForm: BookForm = BookForm(
@@ -55,14 +55,9 @@ class ItemController (
     }
 
     @PostMapping("/items/{itemId}/edit")
-    fun updateItem(@ModelAttribute("form") bookForm: BookForm):String {
-        val book = Book(bookForm.author!!, bookForm.isbn!!)
-        book.id = bookForm.id
-        book.name = bookForm.name
-        book.price = bookForm.price
-        book.stockQuantity = bookForm.stockQuantity
-
-        itemService.saveItem(book)
+    fun updateItem(@PathVariable("itemId") itemId: Long ,@ModelAttribute("form") bookForm: BookForm):String {
+        // 준영속 엔티티, jpa관리 x, 더티 체킹 x
+        itemService.updateItem(itemId, bookForm.name, bookForm.price!!)
         return "redirect:/items"
     }
 }

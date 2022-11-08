@@ -43,13 +43,13 @@ class OrderRepository (
             .select(order)
             .from(order)
             .join(order.member, member)
-            .where(statusEq(order, orderSearch.orderStatus),
-                    nameLike(member, orderSearch.memberName))
+            .where(statusEq(order, orderSearch.orderStatus!!),
+                    nameLike(member, orderSearch.memberName!!))
             .limit(1000)
             .fetch()
     }
 
-    private fun statusEq(order: QOrder, statusCond: OrderStatus?): BooleanExpression? {
+    private fun statusEq(order: QOrder, statusCond: OrderStatus): BooleanExpression? {
         if (statusCond == null) {
             return null
         }
@@ -77,7 +77,6 @@ class OrderRepository (
             }
             jpql += " o.status = :status"
         }
-        //회원 이름 검색
         //회원 이름 검색
         if (StringUtils.hasText(orderSearch.memberName)) {
             if (isFirstCondition) {

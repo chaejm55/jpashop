@@ -11,7 +11,7 @@ class Order (
     val member: Member,
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
-    val orderItems: MutableList<OrderItem>,
+    val orderItems: List<OrderItem>,
 
     val orderDate: LocalDateTime,
 
@@ -30,7 +30,7 @@ class Order (
 
     //==생성 메서드==//
     companion object {
-        fun createOrder(member: Member, delivery: Delivery, orderItems: MutableList<OrderItem>): Order {
+        fun createOrder(member: Member, delivery: Delivery, orderItems: List<OrderItem>): Order {
             return Order(
                 member = member,
                 delivery = delivery,
