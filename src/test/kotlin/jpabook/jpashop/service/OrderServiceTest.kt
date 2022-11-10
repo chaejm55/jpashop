@@ -60,7 +60,7 @@ class OrderServiceTest(
 
         val orderCount = 2
 
-        val orderId: Long = orderService.order(member.id!!, book.id!!, orderCount)
+        val orderId = orderService.order(member.id!!, book.id!!, orderCount)
 
         //when
         orderService.cancelOrder(orderId)

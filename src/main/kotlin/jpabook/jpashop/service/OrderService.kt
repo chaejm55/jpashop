@@ -27,8 +27,8 @@ class OrderService (
     @Transactional
     fun order (memberId: Long, itemId: Long, count: Int): Long {
         // 엔티티 조회
-        val member: Member = memberRepository.findOne(memberId)
-        val item: Item = itemRepository.findOne(itemId)
+        val member = memberRepository.findOne(memberId)
+        val item = itemRepository.findOne(itemId)
 
         // 배송정보 생성
         val delivery: Delivery = Delivery(
@@ -37,15 +37,18 @@ class OrderService (
             status = null,
         )
 
-//        val delivery1 = Delivery::class.java.getConstructor().newInstance()
-//        delivery1.address = member.address
-
-
         // 주문상품 생성, companion object 사용
         val orderItem: OrderItem = OrderItem.createOrderItem(item, item.price!!, count)
 
         // 주문 생성
         val order: Order = Order.createOrder(member, delivery, listOf(orderItem))
+
+
+        // TODO:추후 수정 필요
+        // 그냥 땜빵용...
+        orderItem.order = order
+        delivery.order = order
+
 
         // 주문 저장
         orderRepository.save(order)
@@ -67,15 +70,15 @@ class OrderService (
 
     // 검색
     fun findOrders(orderSearch: OrderSearch): List<Order> {
-        println("list=?")
+//        println("list=?")
         val list = orderRepository.findAllByString(orderSearch)
-        try {
-            println("list.size=${list.size}")
-            println("orderItem.size=${list[0].orderItems.size}")
-            println("orderItem=${list[0].orderItems[0].item?.name}")
-        } catch (e: Exception) {
-            println(e.message)
-        }
+//        try {
+//            println("list.size=${list.size}")
+//            println("orderItem.size=${list[0].orderItems.size}")
+//            println("orderItem=${list[0].orderItems[0].item?.name}")
+//        } catch (e: Exception) {
+//            println(e.message)
+//        }
         return list
     }
 }

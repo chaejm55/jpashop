@@ -5,7 +5,7 @@ import javax.persistence.*
 @Entity
 class Delivery (
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
-    val order: Order?,
+    var order: Order?,
 
     @Embedded
     val address: Address?,
